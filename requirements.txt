@@ -1,3 +1,7 @@
-streamlit
-google-generativeai
 python-dotenv
+streamlit
+PyPDF2
+python-docx
+pytesseract
+google-generativeai
+Pillow
