@@ -151,7 +151,7 @@ document_model = genai.GenerativeModel('gemini-pro')
 
 
 # Set the tesseract command path for Linux environment
-pytesseract.pytesseract.tesseract_cmd = '/usr/bin/tesseract'
+pytesseract.pytesseract.tesseract_cmd = 'C:\Program Files\Tesseract-OCR\tesseract.exe'
 
 
 def get_text_response(input_text):
