@@ -87,7 +87,7 @@ def get_image_response(input_text, image):
 # Initialize Streamlit app
 st.set_page_config(page_title="Gemini Application")
 
-st.header("Gemini Application")
+st.header("Medical Text and Image Application")
 
 # Text Query Section
 st.subheader("Text Query")
