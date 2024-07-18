@@ -149,6 +149,11 @@ image_model = genai.GenerativeModel('gemini-pro-vision')
 # Initialize the document model
 document_model = genai.GenerativeModel('gemini-pro')
 
+
+# Set the tesseract command path for Linux environment
+pytesseract.pytesseract.tesseract_cmd = '/usr/bin/tesseract'
+
+
 def get_text_response(input_text):
     response = chat.send_message(input_text, stream=True)
     return response
