@@ -149,10 +149,8 @@ image_model = genai.GenerativeModel('gemini-pro-vision')
 # Initialize the document model
 document_model = genai.GenerativeModel('gemini-pro')
 
-
 # Set the tesseract command path for Linux environment
-pytesseract.pytesseract.tesseract_cmd = "C:\Program Files\Tesseract-OCR\tesseract.exe"
-
+pytesseract.pytesseract.tesseract_cmd = '/usr/bin/tesseract'
 
 def get_text_response(input_text):
     response = chat.send_message(input_text, stream=True)
@@ -180,9 +178,6 @@ def extract_text_from_doc(doc_file):
     return text
 
 def extract_text_from_images(image_files):
-    # Update the path to where Tesseract is installed
-    pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
-    
     text = ""
     for image_file in image_files:
         image = Image.open(image_file)
