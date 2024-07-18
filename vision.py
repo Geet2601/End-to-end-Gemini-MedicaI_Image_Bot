@@ -63,8 +63,8 @@ from PIL import Image
 import google.generativeai as genai
 
 # Configure the API key
-api_key = os.getenv("GOOGLE_API_KEY")
-genai.configure(api_key=api_key)
+os.getenv("GOOGLE_API_KEY")
+genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
 
 # Initialize the chat model
 text_model = genai.GenerativeModel('gemini-pro')
