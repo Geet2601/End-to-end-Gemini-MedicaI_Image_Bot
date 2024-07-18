@@ -63,8 +63,8 @@ from PIL import Image
 import google.generativeai as genai
 
 # Configure the API key
-api_key = os.getenv("GOOGLE_API_KEY")
-genai.configure(api_key=api_key)
+os.getenv("GOOGLE_API_KEY")
+genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
 
 # Initialize the chat model
 text_model = genai.GenerativeModel('gemini-pro')
@@ -87,7 +87,7 @@ def get_image_response(input_text, image):
 # Initialize Streamlit app
 st.set_page_config(page_title="Gemini Application")
 
-st.header("Gemini Application")
+st.header("Medical Text and Image Application")
 
 # Text Query Section
 st.subheader("Text Query")
@@ -124,6 +124,5 @@ if submit_image:
         st.write(response)
     else:
         st.write("Please provide an input prompt or upload an image.")
-
 
 # ---------------------------------
