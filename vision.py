@@ -18,7 +18,7 @@ genai.configure(api_key=api_key)
 # Initialize the chat and image models
 text_model = genai.GenerativeModel('gemini-pro')
 chat = text_model.start_chat(history=[])
-image_model = genai.GenerativeModel('gemini-pro-vision')
+image_model = genai.GenerativeModel('gemini-1.5-flash')
 
 # Initialize the document model
 document_model = genai.GenerativeModel('gemini-pro')
