@@ -73,7 +73,7 @@ def get_img_as_base64(file):
         data = f.read()
     return base64.b64encode(data).decode()
 img = get_img_as_base64("bg02.jpg")
-img01 = get_img_as_base64("side02.jpg")
+img01 = get_img_as_base64("side03.jpg")
 
 # Load and apply custom CSS
 # with open("designing.css") as source_des:
@@ -143,7 +143,7 @@ background-color: rgb(19, 3, 24);
 }}
 [data-testid="stSidebarContent"]
 {{
-background-image: url("data:side02/jpg;base64,{img01}");
+background-image: url("data:side03/jpg;base64,{img01}");
 background-position:center;
 }}
 
