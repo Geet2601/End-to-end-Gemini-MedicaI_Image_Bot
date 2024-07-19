@@ -1,131 +1,3 @@
-# # Q&A Chatbot
-# #from langchain.llms import OpenAI
-
-# from dotenv import load_dotenv
-
-# load_dotenv()  # take environment variables from .env.
-
-# import streamlit as st
-# import os
-# import pathlib
-# import textwrap
-# from PIL import Image
-
-
-# import google.generativeai as genai
-
-
-# os.getenv("GOOGLE_API_KEY")
-# genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
-
-# ## Function to load OpenAI model and get respones
-
-# def get_gemini_response(input,image):
-#     model = genai.GenerativeModel('gemini-pro-vision')
-#     if input!="":
-#        response = model.generate_content([input,image])
-#     else:
-#        response = model.generate_content(image)
-#     return response.text
-
-# ##initialize our streamlit app
-
-# st.set_page_config(page_title="Medical Image Demo")
-
-# st.header("Gemini Application")
-# input=st.text_input("Input Prompt: ",key="input")
-# uploaded_file = st.file_uploader("Choose an image...", type=["jpg", "jpeg", "png"])
-# image=""   
-# if uploaded_file is not None:
-#     image = Image.open(uploaded_file)
-#     st.image(image, caption="Uploaded Image.", use_column_width=True)
-
-
-# submit=st.button("Tell me about the image")
-
-# ## If ask button is clicked
-
-# if submit:
-    
-#     response=get_gemini_response(input,image)
-#     st.subheader("The Response is")
-#     st.write(response)
-
-# ---------------------------------
-# For chatbot and image input
-
-# from dotenv import load_dotenv
-# load_dotenv()  # take environment variables from .env.
-
-# import streamlit as st
-# import os
-# from PIL import Image
-# import google.generativeai as genai
-
-# # Configure the API key
-# os.getenv("GOOGLE_API_KEY")
-# genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
-
-# # Initialize the chat model
-# text_model = genai.GenerativeModel('gemini-pro')
-# chat = text_model.start_chat(history=[])
-
-# # Initialize the image model
-# image_model = genai.GenerativeModel('gemini-pro-vision')
-
-# def get_text_response(input_text):
-#     response = chat.send_message(input_text, stream=True)
-#     return response
-
-# def get_image_response(input_text, image):
-#     if input_text:
-#         response = image_model.generate_content([input_text, image])
-#     else:
-#         response = image_model.generate_content(image)
-#     return response.text
-
-# # Initialize Streamlit app
-# st.set_page_config(page_title="Gemini Application")
-
-# st.header("Medical Text and Image Application")
-
-# # Text Query Section
-# st.subheader("Text Query")
-# input_text = st.text_input("Enter your question here:", key="text_input")
-
-# submit_text = st.button("Submit Text Query")
-
-# if submit_text:
-#     if input_text:
-#         response = get_text_response(input_text)
-#         st.subheader("The Response is")
-#         for chunk in response:
-#             st.write(chunk.text)
-#             st.write("_" * 80)
-#     else:
-#         st.write("Please enter a question.")
-
-# # Image Query Section
-# st.subheader("Image Query")
-# input_prompt = st.text_input("Enter your input prompt for the image:", key="image_input")
-
-# uploaded_file = st.file_uploader("Choose an image...", type=["jpg", "jpeg", "png"])
-# image = None
-# if uploaded_file is not None:
-#     image = Image.open(uploaded_file)
-#     st.image(image, caption="Uploaded Image.", use_column_width=True)
-
-# submit_image = st.button("Submit Image Query")
-
-# if submit_image:
-#     if image or input_prompt:
-#         response = get_image_response(input_prompt, image)
-#         st.subheader("The Response is")
-#         st.write(response)
-#     else:
-#         st.write("Please provide an input prompt or upload an image.")
-
-# ---------------------------------
 from dotenv import load_dotenv
 import streamlit as st
 import os
@@ -134,6 +6,8 @@ import google.generativeai as genai
 from PyPDF2 import PdfReader
 import docx
 import pytesseract
+import base64
+
 
 load_dotenv()  # Load environment variables from .env
 
@@ -191,15 +65,98 @@ def generate_document_response(document_text, user_prompt):
 # Initialize Streamlit app
 st.set_page_config(page_title="Gemini Application")
 
+
+
+@st.cache_data
+def get_img_as_base64(file):
+    with open(file, "rb") as f:
+        data = f.read()
+    return base64.b64encode(data).decode()
+img = get_img_as_base64("bg02.jpg")
+img01 = get_img_as_base64("side02.jpg")
+
+# Load and apply custom CSS
+# with open("designing.css") as source_des:
+#     st.markdown(f"<style>{source_des.read()}</style>",
+#     unsafe_allow_html=True)
+
+page_by_img = f""" 
+<style>
+[data-testid="stAppViewContainer"]
+{{
+background-color:red;
+background-image: url("data:bg02/jpg;base64,{img}");
+backgroud-size:cover;
+
+}}
+[data-testid="stHeader"]
+{{
+background-color: rgba(0, 0, 0, 0);
+}}
+[id="medical-application"]
+{{
+color: rgb(222, 186, 255);
+font-weight: bolder;
+
+}}
+[id="medical-chatbot"]
+{{
+color: rgb(222, 208, 235);
+}}
+[data-testid="stTextInput-RootElement"]
+{{
+border-radius:50px;
+border-width:2px;
+border-color: rgb(222, 125, 178);
+}}
+[data-baseweb="base-input"]
+{{
+background-color:40,50,80;
+}}
+[data-baseweb="base-input"]
+{{
+background-color:transparent;
+}}
+[id="text_input_1"]
+{{
+background-color:transparent;
+}}
+h1{{
+color: rgba(232, 193, 255, 0.97);
+}}
+header{{
+color: rgba(244, 223, 249, 0.97);;
+}}
+[data-testid="stMarkdownContainer"]
+{{
+color: rgb(255, 144, 184);
+}}
+[data-testid="baseButton-secondary"]
+{{
+background-color: rgba(27, 1, 42, 0.97);
+
+}}
+[data-testid="stSidebarContent"]
+{{
+background-image: url("data:side02/jpg;base64,{img01}");
+background-position:center;
+}}
+
+</style>
+"""
+st.markdown(page_by_img, unsafe_allow_html=True)
+
+
+
 st.sidebar.title("Navigation")
-option = st.sidebar.radio("Choose a functionality:", ["Text Query", "Image Query", "Document Summary"])
+option = st.sidebar.radio("Choose a functionality:", ["Medical Chatbot", "Image Query", "Document Summary"])
 
-st.header("Gemini Medical Application")
+st.header("Medical Application")
 
-if option == "Text Query":
-    st.subheader("Text Query")
+if option == "Medical Chatbot":
+    st.subheader("Medical Chatbot")
     input_text = st.text_input("Enter your question here:", key="text_input")
-    submit_text = st.button("Submit Text Query")
+    submit_text = st.button("Submit")
 
     if submit_text:
         if input_text:
