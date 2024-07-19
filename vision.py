@@ -84,7 +84,6 @@ page_by_img = f"""
 <style>
 [data-testid="stAppViewContainer"]
 {{
-background-color:red;
 background-image: url("data:bg02/jpg;base64,{img}");
 backgroud-size:cover;
 
@@ -97,7 +96,15 @@ background-color: rgba(0, 0, 0, 0);
 {{
 color: rgb(222, 186, 255);
 font-weight: bolder;
-
+}}
+[data-baseweb="select"]
+div{{
+background-color:#12011C;
+color:rgb(245, 211, 255);
+}}
+[data-baseweb="base-input"]
+{{
+background-color:#12011C;
 }}
 [id="medical-chatbot"]
 {{
@@ -108,14 +115,6 @@ color: rgb(222, 208, 235);
 border-radius:50px;
 border-width:2px;
 border-color: rgb(222, 125, 178);
-}}
-[data-baseweb="base-input"]
-{{
-background-color:40,50,80;
-}}
-[data-baseweb="base-input"]
-{{
-background-color:transparent;
 }}
 [id="text_input_1"]
 {{
@@ -131,10 +130,16 @@ color: rgba(244, 223, 249, 0.97);;
 {{
 color: rgb(255, 144, 184);
 }}
+[data-testid="stFileUploaderDropzone"]
+{{
+background-color:#12011C;
+color:rgb(250, 236, 254);
+}}
+
 [data-testid="baseButton-secondary"]
 {{
-background-color: rgba(27, 1, 42, 0.97);
-
+border-color: rgb(238, 181, 255);
+background-color: rgb(19, 3, 24);
 }}
 [data-testid="stSidebarContent"]
 {{
