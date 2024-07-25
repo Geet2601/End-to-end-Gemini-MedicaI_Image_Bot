@@ -217,6 +217,6 @@ elif option == "Document Summary":
             response = generate_document_response(document_text, user_prompt)
             st.subheader("Response")
             st.write(response)
-            st.write("\n\n**Disclaimer:** This information is not a substitute for professional medical advice. Please consult a healthcare professional for serious or persistent issues.")
+           
         else:
             st.error("Could not extract text from the document.")
