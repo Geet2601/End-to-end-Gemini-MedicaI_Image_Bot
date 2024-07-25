@@ -23,18 +23,23 @@ image_model = genai.GenerativeModel('gemini-1.5-flash')
 # Initialize the document model
 document_model = genai.GenerativeModel('gemini-pro')
 
+
 # Set the tesseract command path for Linux environment
 pytesseract.pytesseract.tesseract_cmd = '/usr/bin/tesseract'
+# pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
+
 
 def get_text_response(input_text):
     response = chat.send_message(input_text, stream=True)
     return response
 
 def get_image_response(input_text, image):
+    # Include a more specific prompt for medical advice
     if input_text:
-        response = image_model.generate_content([input_text, image])
+        full_prompt = f"Always provide general first aid advice for the following situation: {input_text}. Always suggest some Over the counter medication for {input_text}. This information is not a substitute for professional medical advice."
+        response = image_model.generate_content([full_prompt, image])
     else:
-        response = image_model.generate_content(image)
+        response = image_model.generate_content("Always provide general first aid advice. Always suggest some over the counter medication. This information is not a substitute for professional medical advice.")
     return response.text
 
 def extract_text_from_pdf(pdf_file):
@@ -72,13 +77,9 @@ def get_img_as_base64(file):
     with open(file, "rb") as f:
         data = f.read()
     return base64.b64encode(data).decode()
+
 img = get_img_as_base64("bg02.jpg")
 img01 = get_img_as_base64("side03.jpg")
-
-# Load and apply custom CSS
-# with open("designing.css") as source_des:
-#     st.markdown(f"<style>{source_des.read()}</style>",
-#     unsafe_allow_html=True)
 
 page_by_img = f""" 
 <style>
@@ -151,8 +152,6 @@ background-position:center;
 """
 st.markdown(page_by_img, unsafe_allow_html=True)
 
-
-
 st.sidebar.title("Navigation")
 option = st.sidebar.radio("Choose a functionality:", ["Medical Chatbot", "Image Query", "Document Summary"])
 
@@ -189,6 +188,7 @@ elif option == "Image Query":
             response = get_image_response(input_prompt, image)
             st.subheader("The Response is")
             st.write(response)
+            
         else:
             st.write("Please provide an input prompt or upload an image.")
 
@@ -217,5 +217,6 @@ elif option == "Document Summary":
             response = generate_document_response(document_text, user_prompt)
             st.subheader("Response")
             st.write(response)
+            st.write("\n\n**Disclaimer:** This information is not a substitute for professional medical advice. Please consult a healthcare professional for serious or persistent issues.")
         else:
             st.error("Could not extract text from the document.")
