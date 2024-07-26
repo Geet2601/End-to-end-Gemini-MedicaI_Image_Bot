@@ -153,7 +153,7 @@ background-position:center;
 st.markdown(page_by_img, unsafe_allow_html=True)
 
 st.sidebar.title("Navigation")
-option = st.sidebar.radio("Choose a functionality:", ["Medical Chatbot", "Image Query", "Document Summary"])
+option = st.sidebar.radio("Choose a functionality:", ["Medical Chatbot", "Image Query", "Medical Report"])
 
 st.header("Medical Application")
 
@@ -192,8 +192,8 @@ elif option == "Image Query":
         else:
             st.write("Please provide an input prompt or upload an image.")
 
-elif option == "Document Summary":
-    st.subheader("Document Summary")
+elif option == "Medical Report":
+    st.subheader("Medical Report")
     doc_option = st.selectbox('Choose the type of document you want to upload:', ('PDF', 'DOCX', 'Images'))
     uploaded_files = st.file_uploader("Choose files...", type=["pdf", "docx", "jpg", "jpeg", "png"], accept_multiple_files=True)
     user_prompt = st.text_input("Enter your question or prompt regarding the document:")
